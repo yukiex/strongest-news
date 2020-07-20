@@ -1,6 +1,8 @@
+import sys
 from flask import Flask, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
-from api import app
+
+app = Flask(__name__)
 
 
 @app.route("/")
