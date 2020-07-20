@@ -25,5 +25,5 @@ Flask(Backend) : <a href="http://localhost:5000" target="_blank">http://localhos
 You can check DB server, for example:
 
 ```bash
-psql -h localhost -u user -ppassword
+mysql -h 127.0.0.1 -u user -ppassword
 ```
