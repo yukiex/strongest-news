@@ -1,0 +1,9 @@
+uwsgi
+flask
+flask_sqlalchemy
+flask_marshmallow
+flask_cors
+sqlalchemy
+marshmallow
+marshmallow-sqlalchemy
+PyMySQL
