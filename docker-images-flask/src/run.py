@@ -95,19 +95,37 @@ def hello():
     return message
 
 
-@app.route("/comments")
+@app.route("/comments", methods=["GET"])
 def comment_page():
     comments = Comment.query.all()
     return comments_schema.jsonify(comments)
 
 
-@app.route("/articles")
+@app.route("/comment/<id>", methods=["GET"])
+def comment_detail(id):
+    comment = Comment.query.get(id)
+    return comment_schema.jsonify(comment)
+
+
+@app.route("/article/<id>", methods=["GET"])
+def article_detail(id):
+    article = Article.query.get(id)
+    return article_schema.jsonify(article)
+
+
+@app.route("/articles", methods=["GET"])
 def articles_page():
     articles = Article.query.all()
     return articles_schema.jsonify(articles)
 
 
-@app.route("/users")
+@app.route("/user/<id>", methods=["GET"])
+def user_detail(id):
+    user = User.query.get(id)
+    return user_schema.jsonify(user)
+
+
+@app.route("/users", methods=["GET"])
 def users_page():
     users = User.query.all()
     return users_schema.jsonify(users)
