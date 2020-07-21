@@ -41,5 +41,6 @@ services:
       - TZ="Asia/Tokyo"
     ports:
       - 3306:3306
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
     volumes:
       - ./database:/docker-entrypoint-initdb.d # docker-entrypoint-initdb.d内のスクリプトは起動時に1度だけ実行される
