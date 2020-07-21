@@ -1,0 +1,1 @@
+INSERT INTO users (id,name,created_at,updated_at) VALUES (0, "田中太郎","2020-07-21 20:00:00","2020-07-21 20:00:00");
