@@ -146,6 +146,19 @@ def get_all_users():
     return users_schema.jsonify(users)
 
 
+@app.errorhandler(400)
+@app.errorhandler(404)
+@app.errorhandler(500)
+def error_handler(error):
+    response = jsonify({
+        "error": {
+            "type": error.name,
+            "message": error.description
+        }
+    })
+    return response, error.code
+
+
 # 起動
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True, port=80)
