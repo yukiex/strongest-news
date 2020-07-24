@@ -1,5 +1,5 @@
 import sys
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from datetime import datetime
@@ -22,7 +22,7 @@ ma = Marshmallow(app)
 class Article(db.Model):
     __tablename__ = 'articles'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String, nullable=False)
     detail = db.Column(db.String, nullable=False)
     type = db.Column(db.String, nullable=False)
@@ -46,7 +46,7 @@ article_schema = ArticleSchema()
 class Comment(db.Model):
     __tablename__ = 'comments'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, primary_key=False)
     article_id = db.Column(db.Integer, primary_key=False)
     detail = db.Column(db.String, nullable=False)
@@ -69,7 +69,7 @@ comment_schema = CommentSchema()
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False,
@@ -96,37 +96,52 @@ def hello():
 
 
 @app.route("/comments", methods=["GET"])
-def comment_page():
+def get_all_comments():
     comments = Comment.query.all()
     return comments_schema.jsonify(comments)
 
 
 @app.route("/comment/<id>", methods=["GET"])
-def comment_detail(id):
+def get_comment(id):
     comment = Comment.query.get(id)
     return comment_schema.jsonify(comment)
 
 
+@app.route("/comment/<id>", methods=["POST"])
+def post_comment(id):
+    comment = Comment(
+        user_id=int(request.form.get("user_id")),
+        article_id=id,
+        detail=request.form.get("detail"),
+    )
+    db.session.add(comment)
+    db.session.commit()
+    return jsonify({
+        "status": 200,
+        "message": "success POST comment"
+    })
+
+
 @app.route("/article/<id>", methods=["GET"])
-def article_detail(id):
+def get_article(id):
     article = Article.query.get(id)
     return article_schema.jsonify(article)
 
 
 @app.route("/articles", methods=["GET"])
-def articles_page():
+def get_all_articles():
     articles = Article.query.all()
     return articles_schema.jsonify(articles)
 
 
 @app.route("/user/<id>", methods=["GET"])
-def user_detail(id):
+def get_user(id):
     user = User.query.get(id)
     return user_schema.jsonify(user)
 
 
 @app.route("/users", methods=["GET"])
-def users_page():
+def get_all_users():
     users = User.query.all()
     return users_schema.jsonify(users)
 
