@@ -1,5 +1,5 @@
 import sys
-from flask import Flask, jsonify, make_response, request, Response
+from flask import Flask, jsonify, make_response, request, Response, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from datetime import datetime
@@ -107,19 +107,48 @@ def get_comment(id):
     return comment_schema.jsonify(comment)
 
 
-@app.route("/comment/<id>", methods=["POST"])
-def post_comment(id):
+@app.route("/comment", methods=["POST"])
+def post_comment():
     comment = Comment(
         user_id=int(request.form.get("user_id")),
-        article_id=id,
+        article_id=int(request.form.get("article_id")),
         detail=request.form.get("detail"),
     )
     db.session.add(comment)
     db.session.commit()
-    return jsonify({
-        "status": 200,
-        "message": "success POST comment"
-    })
+
+    response = comment_schema.jsonify(comment)
+    response.headers['Location'] = '/comment/%d' % comment.id
+    return response, 201
+
+
+@app.route("/comment/<id>", methods=["PUT"])
+def put_comment(id):
+    comment = Comment.query.filter_by(id=id).first()
+    if not comment:
+        # エラーハンドラーに処理を移す場合
+        # ステータスコード、dict型にてメッセージ等を設定できる
+        abort(404, {'code': 'Not found', 'message': 'comment not found'})
+
+    # 更新
+    comment.detail = request.form.get("detail")
+
+    db.session.commit()
+
+    return comment_schema.jsonify(comment)
+
+
+@app.route("/comment/<id>", methods=['DELETE'])
+def delete_comment(id):
+    comment = Comment.query.filter_by(id=id).first()
+    if not comment:
+        abort(404, {'code': 'Not found', 'message': 'comment not found'})
+
+    # レコードの削除 deleteしてcommit
+    db.session.delete(comment)
+    db.session.commit()
+
+    return jsonify(None), 204
 
 
 @app.route("/article/<id>", methods=["GET"])
