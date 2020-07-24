@@ -103,8 +103,8 @@ def get_all_comments():
 
 @app.route("/comment/<id>", methods=["GET"])
 def get_comment(id):
-    comment = Comment.query.get(id)
-    return comment_schema.jsonify(comment)
+    comment = Comment.query.filter_by(article_id=id)
+    return comments_schema.jsonify(comment)
 
 
 @app.route("/comment", methods=["POST"])
