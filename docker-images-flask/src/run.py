@@ -39,8 +39,14 @@ class ArticleSchema(ma.Schema):
                   'img_url', 'created_at', 'updated_at')
 
 
+class ArticleTitleSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'title', 'img_url', 'created_at')
+
+
 articles_schema = ArticleSchema(many=True)
 article_schema = ArticleSchema()
+article_titles_schema = ArticleTitleSchema(many=True)
 
 
 # commentsテーブル
@@ -163,6 +169,12 @@ def get_article(id):
 def get_all_articles():
     articles = Article.query.all()
     return articles_schema.jsonify(articles)
+
+
+@app.route("/article_titles", methods=["GET"])
+def get_all_article_titles():
+    articles = Article.query.all()
+    return article_titles_schema.jsonify(articles)
 
 
 @app.route("/user/<id>", methods=["GET"])
