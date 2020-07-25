@@ -2,23 +2,26 @@ import React from 'react';
 import './App.css';
 
 const NewsViewPanel = (props) => (
-  <div id="article" class="col-md-12">
-    <div class="card ">
-      <div class="card-header ">
-        <h4 class="card-title">{props.title}</h4>
+  <div id="article" className="col-md-12">
+    <div className="card ">
+      <div className="card-header ">
+        <h4 className="card-title">{props.title}</h4>
+        <p className="card-category">カテゴリー：{props.type}</p>
       </div>
-      <div class="card-body ">
-        <img src={props.img_url} alt={props.title}></img>
+      <div className="card-body ">
+        <div className="article_img">
+          <img src={props.img_url} alt={props.title}></img>
+        </div>
         <div
           dangerouslySetInnerHTML={{
             __html: props.detail,
           }}
         />
       </div>
-      <div class="card-footer ">
+      <div className="card-footer ">
         <hr></hr>
-        <div class="stats">
-          <i class="fa fa-history"></i> {props.updated_at}
+        <div className="stats">
+          <i className="fa fa-history"></i> {props.updated_at}
         </div>
       </div>
     </div>
@@ -62,6 +65,7 @@ class NewsDetailView extends React.Component {
           img_url={item.img_url}
           detail={item.detail}
           updated_at={item.updated_at}
+          type={item.type}
         />
       </div>
     );

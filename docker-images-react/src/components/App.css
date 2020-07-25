@@ -41,3 +41,8 @@ ul {
 .game-info {
   margin-left: 20px;
 }
+
+.article_img {
+  text-align: center;
+  margin: 20px 0;
+}
