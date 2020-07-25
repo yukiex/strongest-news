@@ -3,6 +3,7 @@ from flask import Flask, jsonify, make_response, request, Response, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from datetime import datetime
+from sqlalchemy import desc
 
 # 準備
 app = Flask(__name__)
@@ -103,7 +104,8 @@ def get_all_comments():
 
 @app.route("/comment/<id>", methods=["GET"])
 def get_comment(id):
-    comment = Comment.query.filter_by(article_id=id)
+    comment = Comment.query.filter_by(
+        article_id=id).order_by(Comment.id).all()
     return comments_schema.jsonify(comment)
 
 
