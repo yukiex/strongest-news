@@ -57,7 +57,7 @@ class NewsAllView extends React.Component {
     return (
       <div class="row">
         {this.state.items.map((item, index) => (
-          <NewsPanel title={item.title} img_url={item.img_url} page_url={index + 1} />
+          <NewsPanel title={item.title} img_url={item.img_url} page_url={index} />
         ))}
       </div>
     );
