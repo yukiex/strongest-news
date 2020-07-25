@@ -171,7 +171,13 @@ def get_all_articles():
     return articles_schema.jsonify(articles)
 
 
-@app.route("/article_titles", methods=["GET"])
+@app.route("/articles/latest", methods=["GET"])
+def get_latest_articles():
+    articles = Article.query.order_by(desc(Article.created_at)).limit(9)
+    return article_titles_schema.jsonify(articles)
+
+
+@app.route("/articles/title", methods=["GET"])
 def get_all_article_titles():
     articles = Article.query.all()
     return article_titles_schema.jsonify(articles)
