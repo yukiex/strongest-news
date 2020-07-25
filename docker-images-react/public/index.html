@@ -1,17 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>React App</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>最強ニュースサイト</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link href="/css/paper-dashboard.css" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="/css/demo.css" rel="stylesheet" />
   </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+
+  <body class="">
+    <div class="wrapper">
+      <div class="sidebar" data-color="white" data-active-color="danger">
+        <div class="logo">
+          <a href="/" class="simple-text logo-mini">
+            <div class="logo-image-small">
+              <img src="/img/logo-small.png" />
+            </div>
+          </a>
+          <a href="/" class="simple-text logo-normal"> </a>
+        </div>
+        <div class="sidebar-wrapper">
+          <ul class="nav">
+            <li>
+              <a href="/login">
+                <i class="nc-icon nc-single-02"></i>
+                <p>ログイン</p>
+              </a>
+            </li>
+
+            <li>
+              <a href="/register">
+                <i class="nc-icon nc-simple-add"></i>
+                <p>新規登録</p>
+              </a>
+            </li>
+
+            <hr />
+
+            <li>
+              <a href="/">
+                <i class="nc-icon nc-bank"></i>
+                <p>ニュース一覧</p>
+              </a>
+            </li>
+
+            <li>
+              <a href="/latest">
+                <i class="nc-icon nc-watch-time"></i>
+                <p>最新のニュース</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+          <div class="container-fluid">
+            <div class="navbar-wrapper">
+              <div class="navbar-toggle">
+                <button type="button" class="navbar-toggler">
+                  <span class="navbar-toggler-bar bar1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                </button>
+              </div>
+              <a class="navbar-brand" href="/">最強ニュースサイト</a>
+            </div>
+
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navigation"
+              aria-controls="navigation-index"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-bar navbar-kebab"></span>
+              <span class="navbar-toggler-bar navbar-kebab"></span>
+              <span class="navbar-toggler-bar navbar-kebab"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+              <form action="/search" method="GET">
+                <div class="input-group no-border">
+                  <input
+                    type="text"
+                    name="keyword"
+                    class="form-control"
+                    placeholder="検索キーワード"
+                  />
+                  <button
+                    type="submit"
+                    style="
+                      background-color: transparent;
+                      border: none;
+                      cursor: pointer;
+                      outline: none;
+                      padding: 0;
+                      appearance: none;
+                    "
+                  >
+                    <div class="input-group-text">
+                      <i class="nc-icon nc-zoom-split"></i>
+                    </div>
+                  </button>
+                </div>
+              </form>
+
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link btn-rotate" href="/setting">
+                    <i class="nc-icon nc-settings-gear-65"></i>
+                    <p>
+                      <span class="d-lg-none d-md-block">Account</span>
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- End Navbar -->
+
+        <div class="content">
+          <!-- ▼▼▼　コンテンツ部分　▼▼▼ -->
+          <div id="root"></div>
+          <!-- ▲▲▲　コンテンツ部分　▲▲▲ -->
+        </div>
+
+        <footer class="footer footer-black footer-white">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="credits ml-auto">
+                <span class="copyright">
+                  © Strong Engineer Co., Ltd.
+                </span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
