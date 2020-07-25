@@ -183,6 +183,13 @@ def get_all_article_titles():
     return article_titles_schema.jsonify(articles)
 
 
+@app.route("/articles/title/<page>", methods=["GET"])
+def get_article_titles(page):
+    articles = Article.query.order_by(
+        Article.id).limit(9).offset(9 * (int(page)-1))
+    return article_titles_schema.jsonify(articles)
+
+
 @app.route("/user/<id>", methods=["GET"])
 def get_user(id):
     user = User.query.get(id)
