@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from datetime import datetime
 from sqlalchemy import desc
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 # 準備
 app = Flask(__name__)
@@ -16,6 +17,13 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://{user}:{password}@{host
 app.config['JSON_AS_ASCII'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+
+# sessionを使う際にSECRET_KEYを設定
+app.config['SECRET_KEY'] = 'secret_key'
+
+# ログインモジュール
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 # モデルとスキーマの定義
@@ -72,12 +80,13 @@ comments_schema = CommentSchema(many=True)
 comment_schema = CommentSchema()
 
 
-# usersテーブル
-class User(db.Model):
-    __tablename__ = 'users'
+# userテーブル
+class User(UserMixin, db.Model):
+    __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
+    e_mail = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False,
                            default=datetime.now, onupdate=datetime.now)
@@ -85,11 +94,31 @@ class User(db.Model):
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'created_at', 'updated_at')
+        fields = ('id', 'e_mail', 'password', 'created_at', 'updated_at')
 
 
 users_schema = UserSchema(many=True)
 user_schema = UserSchema()
+
+
+# ログイン周辺
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route('/login')
+def login():
+    user = User.query.filter_by(username='testuser').first()
+    login_user(user)
+    return 'Now login OK'
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return 'Now logout OK'
 
 
 # ルーティング設定

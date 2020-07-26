@@ -7,3 +7,4 @@ sqlalchemy
 marshmallow
 marshmallow-sqlalchemy
 PyMySQL
+flask_login
