@@ -29,27 +29,25 @@ const NewsViewPanel = (props) => (
 );
 
 const CommentViewPanel = (props) => (
-  <div id="comment" class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">コメント</h4>
+  <div id="comment" className="col-md-12">
+    <div className="card">
+      <div className="card-header">
+        <h4 className="card-title">コメント</h4>
       </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead class="text-primary">
+      <div className="card-body">
+        <div className="table-responsive">
+          <table className="table">
+            <thead className="text-primary">
               <th>ユーザー</th>
               <th>コメント</th>
             </thead>
             <tbody>
-              <tr>
-                {props.commentArray.map((item) => (
-                  <>
-                    <td>{item.name}</td>
-                    <td>{item.detail}</td>
-                  </>
-                ))}
-              </tr>
+              {props.commentArray.map((item) => (
+                <tr>
+                  <td>{item.name}</td>
+                  <td>{item.detail}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -59,36 +57,36 @@ const CommentViewPanel = (props) => (
 );
 
 const CommentPostPanel = (props) => (
-  <div id="comment-form" class="col-md-12">
-    <div class="card card-user">
-      <div class="card-header">
-        <h4 class="card-title">コメントを投稿する</h4>
+  <div id="comment-form" className="col-md-12">
+    <div className="card card-user">
+      <div className="card-header">
+        <h4 className="card-title">コメントを投稿する</h4>
       </div>
-      <div class="card-body">
-        <form action={`/comment/${props.id}`} method="POST">
-          <input type="hidden" name="news_id" value={props.id} />
+      <div className="card-body">
+        <form action={`/comment`} method="POST">
+          <input type="hidden" name="article_id" value={props.id} />
 
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
+          <div className="row">
+            <div className="col-md-3">
+              <div className="form-group">
                 <label>お名前</label>
                 <input type="text" name="name" class="form-control" />
               </div>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="form-group">
                 <label>メッセージ</label>
-                <textarea name="comment" class="form-control textarea"></textarea>
+                <textarea name="detail" className="form-control textarea"></textarea>
               </div>
             </div>
           </div>
 
-          <div class="row">
-            <div class="update ml-auto mr-auto">
-              <button type="submit" class="btn btn-primary btn-round">
+          <div className="row">
+            <div className="update ml-auto mr-auto">
+              <button type="submit" className="btn btn-primary btn-round">
                 投稿する
               </button>
             </div>

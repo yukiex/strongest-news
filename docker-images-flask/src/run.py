@@ -118,7 +118,7 @@ def get_comment(id):
 @app.route("/comment", methods=["POST"])
 def post_comment():
     comment = Comment(
-        user_id=int(request.form.get("user_id")),
+        name=request.form.get("name"),
         article_id=int(request.form.get("article_id")),
         detail=request.form.get("detail"),
     )
