@@ -201,6 +201,20 @@ def get_all_users():
     users = User.query.all()
     return users_schema.jsonify(users)
 
+# Usage: /search?keyword=example
+@app.route("/search", methods=["GET"])
+def get_search_article():
+    keyword = request.args.get('keyword', '')
+    articles = Article.query.filter(Article.title.like('%{}%'.format(keyword)))
+    return article_titles_schema.jsonify(articles)
+
+# Usage: /category?type=エンタがビタミン
+@app.route("/category", methods=["GET"])
+def get_category_article():
+    _type = request.args.get('type', '')
+    articles = Article.query.filter(Article.type.like('%{}%'.format(_type)))
+    return article_titles_schema.jsonify(articles)
+
 
 @app.errorhandler(400)
 @app.errorhandler(404)

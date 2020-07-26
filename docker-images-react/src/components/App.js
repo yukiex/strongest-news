@@ -4,6 +4,7 @@ import NewsAllView from './NewsAllView';
 import NewsDetailView from './NewsDetailView';
 import NewsLatestView from './NewsLatestView';
 import NewsSearchView from './NewsSearchView';
+import NewsCategoryView from './NewsCategoryView';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 class App extends React.Component {
@@ -13,6 +14,7 @@ class App extends React.Component {
         <div>
           <Route exact path="/" component={NewsAllView} />
           <Route path="/search" component={NewsSearchView} />
+          <Route path="/category" component={NewsCategoryView} />
           <Route path="/latest" component={NewsLatestView} />
           <Route path="/article/:id" component={NewsDetailView} />
         </div>

@@ -1,12 +1,16 @@
 import React from 'react';
 import './App.css';
+import { Link } from 'react-router-dom';
 
 const NewsViewPanel = (props) => (
   <div id="article" className="col-md-12">
     <div className="card ">
       <div className="card-header ">
         <h4 className="card-title">{props.title}</h4>
-        <p className="card-category">カテゴリー：{props.type}</p>
+        <p className="card-category">
+          カテゴリー：
+          <Link to={`/category?type=${props.type}`}>{props.type}</Link>
+        </p>
       </div>
       <div className="card-body ">
         <div className="article_img">
