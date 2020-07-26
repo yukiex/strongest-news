@@ -43,8 +43,12 @@ const CommentViewPanel = (props) => (
             </thead>
             <tbody>
               <tr>
-                <td>名無し</td>
-                <td>コメント</td>
+                {props.commentArray.map((item) => (
+                  <>
+                    <td>{item.name}</td>
+                    <td>{item.detail}</td>
+                  </>
+                ))}
               </tr>
             </tbody>
           </table>
@@ -101,6 +105,7 @@ class NewsDetailView extends React.Component {
     this.state = {
       isLoaded: false,
       item: [],
+      commentItem: [],
     };
   }
   componentDidMount() {
@@ -113,6 +118,23 @@ class NewsDetailView extends React.Component {
           this.setState({
             isLoaded: true,
             item: json,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+    fetch(`/comment/${params.id}`)
+      .then((res) => res.json())
+      .then(
+        (json) => {
+          console.log(json);
+          this.setState({
+            isLoaded: true,
+            commentItem: json,
           });
         },
         (error) => {
@@ -137,7 +159,7 @@ class NewsDetailView extends React.Component {
           />
         </div>
         <div class="row">
-          <CommentViewPanel />
+          <CommentViewPanel commentArray={this.state.commentItem} />
         </div>
         <div class="row">
           <CommentPostPanel id={item.id} />

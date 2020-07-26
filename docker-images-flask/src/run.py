@@ -54,7 +54,7 @@ class Comment(db.Model):
     __tablename__ = 'comments'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, primary_key=False)
+    name = db.Column(db.String, primary_key=False)
     article_id = db.Column(db.Integer, primary_key=False)
     detail = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
@@ -64,7 +64,7 @@ class Comment(db.Model):
 
 class CommentSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'user_id', 'article_id',
+        fields = ('id', 'name', 'article_id',
                   'detail', 'created_at', 'updated_at')
 
 
