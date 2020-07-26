@@ -113,7 +113,7 @@ def login():
         password=request.form.get("password")).first()
     if user is not None:
         login_user(user)
-        return 'Login Successfully', 200
+        return 'Login Successfully'
     else:
         return 'Login Failed', 401
 
@@ -122,7 +122,14 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return 'Logout Successfully', 200
+    return 'Logout Successfully'
+
+
+@app.route("/login/check", methods=["GET"])
+@login_required
+def check_login():
+    user = User.query.get(current_user.id)
+    return user_schema.jsonify(user)
 
 
 # ルーティング設定
@@ -223,13 +230,14 @@ def get_article_titles(page):
     return article_titles_schema.jsonify(articles)
 
 
-@app.route("/user/<id>", methods=["GET"])
+@app.route("/user/profile", methods=["GET"])
+@login_required
 def get_user(id):
-    user = User.query.get(id)
+    user = User.query.get(current_user.id)
     return user_schema.jsonify(user)
 
 
-@app.route("/users", methods=["GET"])
+# @app.route("/users", methods=["GET"])
 def get_all_users():
     users = User.query.all()
     return users_schema.jsonify(users)
