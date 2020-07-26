@@ -107,18 +107,22 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-@app.route('/login')
+@app.route('/login', methods=["POST"])
 def login():
-    user = User.query.filter_by(username='testuser').first()
-    login_user(user)
-    return 'Now login OK'
+    user = User.query.filter_by(e_mail=request.form.get("e_mail")).filter_by(
+        password=request.form.get("password")).first()
+    if user is not None:
+        login_user(user)
+        return 'Login Successfully', 200
+    else:
+        return 'Login Failed', 401
 
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return 'Now logout OK'
+    return 'Logout Successfully', 200
 
 
 # ルーティング設定
