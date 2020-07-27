@@ -23,6 +23,7 @@ services:
     build:
       context: ./docker-images-react
       dockerfile: Dockerfile
+      target: dev
     volumes:
       - ./docker-images-react:/usr/src/app
       - /usr/src/app/node_modules
