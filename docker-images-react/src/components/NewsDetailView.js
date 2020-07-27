@@ -61,9 +61,6 @@ const CommentViewPanel = (props) => (
 );
 
 class CommentPostPanel extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   submitHandler = (event) => {
     event.preventDefault();
     const requestOptions = {
