@@ -68,7 +68,7 @@ class CommentPostPanel extends React.Component {
       headers: new Headers({ 'Content-type': 'application/x-www-form-urlencoded' }),
       body: `article_id=${this.article_id.value}&detail=${this.detail.value}&name=${this.name.value}`,
     };
-    fetch('/comment', requestOptions)
+    fetch('/v1/comment', requestOptions)
       .then(function (response) {
         console.log(response);
       })
@@ -152,7 +152,7 @@ class NewsDetailView extends React.Component {
   }
   componentDidMount() {
     const { params } = this.props.match;
-    fetch(`/article/${params.id}`)
+    fetch(`/v1/article/${params.id}`)
       .then((res) => res.json())
       .then(
         (json) => {
@@ -169,7 +169,7 @@ class NewsDetailView extends React.Component {
           });
         }
       );
-    fetch(`/comment/${params.id}`)
+    fetch(`/v1/comment/${params.id}`)
       .then((res) => res.json())
       .then(
         (json) => {

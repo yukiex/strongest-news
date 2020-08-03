@@ -1,0 +1,17 @@
+[Unit]
+Description = flask service
+After=network.target
+
+[Service]
+WorkingDirectory = /home/ec2-user/strongest-news-react-flask-mysql/docker-images-flask
+Environment=FLASK_CONFIG=production
+#Environment=PYTHONPATH=/home/ec2-user/.local/lib/python3.7/site-packages/
+ExecStart = /home/ec2-user/.local/bin/uwsgi --ini uwsgi.ini
+
+Restart   = always
+Type      = simple
+User      = ec2-user
+Group     = ec2-user
+
+[Install]
+WantedBy = multi-user.target

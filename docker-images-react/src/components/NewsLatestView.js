@@ -11,7 +11,7 @@ class NewsLatestView extends React.Component {
     };
   }
   componentDidMount() {
-    fetch('/articles/latest')
+    fetch('/v1/articles/latest')
       .then((res) => res.json())
       .then(
         (json) => {

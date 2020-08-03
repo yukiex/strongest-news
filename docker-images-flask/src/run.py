@@ -1,4 +1,5 @@
 import sys
+#sys.path.append("/home/ec2-user/.local/lib/python3.7/site-packages")
 from flask import Flask, jsonify, make_response, request, Response, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -9,10 +10,10 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 # 準備
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://{user}:{password}@{host}/{db_name}?charset=utf8'.format(**{
-    'user': 'user',
-    'password': 'password',
-    'host': 'mysql-db',
-    'db_name': 'database'
+    'user': 'strongest',
+    'password': '39inakam',
+    'host': '127.0.0.1',
+    'db_name': 'strongest'
 })
 app.config['JSON_AS_ASCII'] = False
 db = SQLAlchemy(app)
@@ -107,7 +108,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-@app.route('/login', methods=["POST"])
+@app.route("/v1/login", methods=["POST"])
 def login():
     user = User.query.filter_by(e_mail=request.form.get("e_mail")).filter_by(
         password=request.form.get("password")).first()
@@ -118,14 +119,14 @@ def login():
         return 'Login Failed', 401
 
 
-@app.route('/logout')
+@app.route("/v1/logout")
 @login_required
 def logout():
     logout_user()
     return 'Logout Successfully'
 
 
-@app.route("/login/check", methods=["GET"])
+@app.route("/v1/login/check", methods=["GET"])
 @login_required
 def check_login():
     user = User.query.get(current_user.id)
@@ -133,7 +134,7 @@ def check_login():
 
 
 # ルーティング設定
-@app.route("/")
+@app.route("/v1/")
 def hello():
     version = "{}.{}".format(sys.version_info.major, sys.version_info.minor)
     message = "Hello World from Flask in a uWSGI Nginx Docker container with Python {} (default)".format(
@@ -142,20 +143,20 @@ def hello():
     return message
 
 
-@app.route("/comments", methods=["GET"])
+@app.route("/v1/comments", methods=["GET"])
 def get_all_comments():
     comments = Comment.query.all()
     return comments_schema.jsonify(comments)
 
 
-@app.route("/comment/<id>", methods=["GET"])
+@app.route("/v1/comment/<id>", methods=["GET"])
 def get_comment(id):
     comment = Comment.query.filter_by(
         article_id=id).order_by(Comment.id).all()
     return comments_schema.jsonify(comment)
 
 
-@app.route("/comment", methods=["POST"])
+@app.route("/v1/comment", methods=["POST"])
 def post_comment():
     comment = Comment(
         name=request.form.get("name"),
@@ -170,7 +171,7 @@ def post_comment():
     return response, 201
 
 
-@app.route("/comment/<id>", methods=["PUT"])
+@app.route("/v1/comment/<id>", methods=["PUT"])
 def put_comment(id):
     comment = Comment.query.filter_by(id=id).first()
     if not comment:
@@ -186,7 +187,7 @@ def put_comment(id):
     return comment_schema.jsonify(comment)
 
 
-@app.route("/comment/<id>", methods=['DELETE'])
+@app.route("/v1/comment/<id>", methods=['DELETE'])
 def delete_comment(id):
     comment = Comment.query.filter_by(id=id).first()
     if not comment:
@@ -199,58 +200,58 @@ def delete_comment(id):
     return jsonify(None), 204
 
 
-@app.route("/article/<id>", methods=["GET"])
+@app.route("/v1/article/<id>", methods=["GET"])
 def get_article(id):
     article = Article.query.get(id)
     return article_schema.jsonify(article)
 
 
-@app.route("/articles", methods=["GET"])
+@app.route("/v1/articles", methods=["GET"])
 def get_all_articles():
     articles = Article.query.all()
     return articles_schema.jsonify(articles)
 
 
-@app.route("/articles/latest", methods=["GET"])
+@app.route("/v1/articles/latest", methods=["GET"])
 def get_latest_articles():
     articles = Article.query.order_by(desc(Article.created_at)).limit(9)
     return article_titles_schema.jsonify(articles)
 
 
-@app.route("/articles/title", methods=["GET"])
+@app.route("/v1/articles/title", methods=["GET"])
 def get_all_article_titles():
     articles = Article.query.all()
     return article_titles_schema.jsonify(articles)
 
 
-@app.route("/articles/title/<page>", methods=["GET"])
+@app.route("/v1/articles/title/<page>", methods=["GET"])
 def get_article_titles(page):
     articles = Article.query.order_by(
         Article.id).limit(9).offset(9 * (int(page)-1))
     return article_titles_schema.jsonify(articles)
 
 
-@app.route("/user/profile", methods=["GET"])
+@app.route("/v1/user/profile", methods=["GET"])
 @login_required
 def get_user(id):
     user = User.query.get(current_user.id)
     return user_schema.jsonify(user)
 
 
-# @app.route("/users", methods=["GET"])
+# @app.route("/v1/users", methods=["GET"])
 def get_all_users():
     users = User.query.all()
     return users_schema.jsonify(users)
 
 # Usage: /search?keyword=example
-@app.route("/search", methods=["GET"])
+@app.route("/v1/search", methods=["GET"])
 def get_search_article():
     keyword = request.args.get('keyword', '')
     articles = Article.query.filter(Article.title.like('%{}%'.format(keyword)))
     return article_titles_schema.jsonify(articles)
 
 # Usage: /category?type=エンタがビタミン
-@app.route("/category", methods=["GET"])
+@app.route("/v1/category", methods=["GET"])
 def get_category_article():
     _type = request.args.get('type', '')
     articles = Article.query.filter(Article.type.like('%{}%'.format(_type)))
@@ -272,4 +273,4 @@ def error_handler(error):
 
 # 起動
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True, port=80)
+    app.run(host="0.0.0.0", debug=True, port=3031)
