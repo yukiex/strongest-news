@@ -1,0 +1,9 @@
+- name: Install Dependencies
+  yum:
+    name: [
+    'jq',
+    'git',
+    'gcc',
+    ]
+    state: present
+  become: yes

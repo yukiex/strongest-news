@@ -1,0 +1,15 @@
+- name: Install for strongest-news
+  args:
+    chdir: /home/ec2-user/strongest-news/flask
+  shell: "pip3 install --user --no-cache-dir -r requirements.txt"
+
+- name: Copy strongest-news unit file
+  copy:
+    src: etc/systemd/system/flask.service
+    dest: /etc/systemd/system/flask.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - daemon-reload
+  become: yes

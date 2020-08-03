@@ -1,0 +1,63 @@
+- name: Install Package
+  yum:
+    name: ['mariadb-server']
+    state: present
+  become: yes
+
+- name: Enable and start mariadb service
+  systemd:
+    name: mariadb
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+
+- name: Install python mysqldb module
+  yum:
+    name: MySQL-python
+    state: latest
+  become: yes
+
+# - name: Set root password
+#   mysql_user:
+#     name: root
+#     host_all: yes
+#     password: qsecofr
+
+# - name: Create /home/ec2-user/.my.cnf
+#   template:
+#     src: .my.cnf.j2
+#     dest: /home/ec2-user/.my.cnf
+#     owner: ec2-user
+#     group: ec2-user
+#     mode: 0600
+
+# - name: Remove anonymous users
+#   mysql_user:
+#     name: ''
+#     host_all: yes
+#     state: absent
+
+# - name: Get hostname
+#   command: hostname
+#   register: hostname
+#   changed_when: false
+#   failed_when: false
+ 
+# - name: Disallow root login remotely
+#   mysql_user:
+#     name: root
+#     host: "{{ hostname.stdout }}"
+#     state: absent
+
+# - name: Remove test database and access to it
+#   mysql_db:
+#     name: test
+#     state: absent
+
+# - name: Enable and start mysql service
+#   systemd:
+#     name: mysql
+#     state: started
+#     daemon_reload: yes
+#     enabled: yes

@@ -1,0 +1,4 @@
+- name: Install for strongest-news
+  args:
+    chdir: /home/ec2-user/strongest-news/react
+  shell: "npm install && npm run build"

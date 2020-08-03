@@ -1,0 +1,15 @@
+---
+- name: nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  args:
+    creates: "/home/ec2-user/.nvm/nvm.sh"
+    chdir: /home/ec2-user
+
+
+- name: Install Node.js
+  shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install node'
+  args:
+    creates: "{{ ansible_env.HOME }}/.nvm/versions/node"
+    chdir: /home/ec2-user
+    executable: /bin/bash

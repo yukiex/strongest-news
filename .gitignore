@@ -6,10 +6,10 @@ node_modules
 .pnp.js
 
 # testing
-docker-images-react/coverage
+react/coverage
 
 # production
-docker-images-react/build
+react/build
 
 # misc
 .DS_Store
@@ -22,7 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-docker-images-nginx/log
+nginx/log
 
 __pycache__
 

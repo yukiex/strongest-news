@@ -1,0 +1,24 @@
+# - name: Create MySQL database and user
+#   shell: mysql < 0_database.sql
+#   args:
+#     chdir: /home/ec2-user/strongest-news/database
+
+- name: Load MySQL database schema
+  shell: mysql -u strongest -p39inakam strongest < 1_initial.sql
+  args:
+    chdir: /home/ec2-user/strongest-news/database
+
+- name: Load users
+  shell: mysql -u strongest -p39inakam strongest < 2_users.sql
+  args:
+    chdir: /home/ec2-user/strongest-news/database
+
+- name: Load articles
+  shell: mysql -u strongest -p39inakam strongest < 3_articles.sql
+  args:
+    chdir: /home/ec2-user/strongest-news/database
+
+- name: Load comments
+  shell: mysql -u strongest -p39inakam strongest < 4_comments.sql
+  args:
+    chdir: /home/ec2-user/strongest-news/database

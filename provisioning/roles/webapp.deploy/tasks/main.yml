@@ -1,0 +1,41 @@
+- name: Create strongest-news directory
+  file:
+    path=/home/ec2-user/strongest-news
+    state=directory
+
+- name: Deploy strongest-news app
+  synchronize:
+    src: ../flask
+    dest: /home/ec2-user/strongest-news
+    delete: yes
+    recursive: yes
+
+- name: Deploy strongest-news front
+  synchronize:
+    src: ../react
+    dest: /home/ec2-user/strongest-news
+    delete: yes
+    recursive: yes
+
+- name: Deploy strongest-news database
+  synchronize:
+    src: ../database
+    dest: /home/ec2-user/strongest-news
+    delete: yes
+    recursive: yes
+
+- name: Chmod ec2-user home dir
+  become: yes
+  file:
+    dest: /home/ec2-user
+    owner: ec2-user
+    group: ec2-user
+    mode: 0755
+
+- name: Chmod ec2-user
+  become: yes
+  file:
+    dest: /home/ec2-user/strongest-news
+    owner: ec2-user
+    group: ec2-user
+    mode: 0755

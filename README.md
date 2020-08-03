@@ -1,7 +1,7 @@
 - Setting node_modules
 
 ```bash
-cd docker-images-react && yarn install
+cd react && yarn install
 ```
 
 - Build containers:
