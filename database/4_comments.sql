@@ -1,3 +1,4 @@
+TRUNCATE comments;
 INSERT INTO comments
     (id,name,article_id,detail,created_at,updated_at)
 VALUES

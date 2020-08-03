@@ -1,4 +1,4 @@
-CREATE DATABASE `strongest`
+CREATE DATABASE IF NOT EXISTS `strongest`
 CHARACTER SET   utf8
 COLLATE         utf8_general_ci
 ;

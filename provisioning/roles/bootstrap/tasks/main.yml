@@ -1,3 +1,7 @@
+- name: Upgrade all packages
+  yum: name=* state=latest
+  become: yes
+
 - name: Install Dependencies
   yum:
     name: [

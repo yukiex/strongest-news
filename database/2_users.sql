@@ -1,3 +1,5 @@
+TRUNCATE user;
+
 INSERT INTO user
     (e_mail,password,created_at,updated_at)
 VALUES

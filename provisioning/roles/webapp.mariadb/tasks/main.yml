@@ -1,7 +1,7 @@
-# - name: Create MySQL database and user
-#   shell: mysql < 0_database.sql
-#   args:
-#     chdir: /home/ec2-user/strongest-news/database
+- name: Create MySQL database and user
+  shell: mysql -u root < 0_database.sql
+  args:
+    chdir: /home/ec2-user/strongest-news/database
 
 - name: Load MySQL database schema
   shell: mysql -u strongest -p39inakam strongest < 1_initial.sql

@@ -3,15 +3,15 @@
   gather_facts: yes
 
   roles:
-    # - bootstrap
-    # - nginx
-    # - mariadb
-    # - python
-    # - nodejs
-    # - webapp.deploy
-    # - webapp.mariadb
-    # - webapp.python
-    # - webapp.nodejs
+    - bootstrap
+    - nginx
+    - mariadb
+    - python
+    - nodejs
+    - webapp.deploy
+    - webapp.mariadb
+    - webapp.python
+    - webapp.nodejs
     - webapp.nginx
 
   tasks:
